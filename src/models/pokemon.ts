@@ -1,5 +1,21 @@
 export interface Pokemon {
     id:string;
     name:string;
+    supertype:string;
+    subtypes:string;
+    level:string;
+    hp:string;
+    types:string[];
     evolvesFrom:string;
+    evolvesTo:string[];
+    rules:string[];
+    abilities:string[];
+    attacks:string[];
+    weeaknesses:string[];
+    resistances:string[];
+    retreatCost:string[];
+    images:{
+        small:string,
+        large:string
+    }
 }

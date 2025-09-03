@@ -8,17 +8,21 @@ import { ApiResponse } from '../../models/api-response';
   providedIn: 'root'
 })
 export class PokemonService {
-  private baseUrl:string = 'https://api.pokemontcg.io/v2';
-  
-  pokemons!:Pokemon[];
+  private baseUrl: string = 'https://api.pokemontcg.io/v2';
 
-  constructor(private http:HttpClient){};
+  // https://api.pokemontcg.io/v2
 
-  getPokemons():Observable<Pokemon[]>{
+  constructor(private http: HttpClient) { };
+
+  getPokemons(): Observable<Pokemon[]> {
     return this.http.get<ApiResponse<Pokemon[]>>(`${this.baseUrl}/cards`).pipe(
-      map(res=>res.data)
+      map(res => res.data)
     );
   }
 
-  
+    getPokemonId(id:string): Observable<Pokemon[]> {
+    return this.http.get<ApiResponse<Pokemon[]>>(`${this.baseUrl}/cards/${id}`).pipe(
+      map(res => res.data)
+    );
+  }
 }

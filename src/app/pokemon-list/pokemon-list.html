@@ -1,5 +1,13 @@
-<p>pokemon-list works!</p>
-
-@for(pokemon of pokemons){
-    
+<h1>Liste Pokémon</h1>
+@if(loading){
+    <div>Données en cours de chargement</div>
+} @else {
+    <!-- Ne surtout pas oublier le track !!!!!! -->
+    <ul>
+        @for (pokemon of pokemons; track pokemon.id) {
+            <a class="py-3" routerLink="/pokemons/{{pokemon.id}}"><img [src]="pokemon.images.small" alt="{{pokemon.name}}"></a>
+        } @empty {
+            <li>Aucun pokémon</li>
+        }
+    </ul>
 }

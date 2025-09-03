@@ -10,18 +10,27 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
   styleUrl: './pokemon-details.css'
 })
 export class PokemonDetails {
-  pokemon!: Pokemon[];
+  pokemon?: Pokemon;
 
   route: ActivatedRoute = inject(ActivatedRoute);
 
-  id!: string;
   constructor(private pokemonService: PokemonService) { };
 
-  ngOnInit(): void {
-    //   this.route.paramMap.subscribe((params:ParamMap)=>{
-    //   this.id=params.get('id')
-    // )
-    //   this.pokemon = this.pokemonService.find(this.pokemon => pokemons.id === this.id)
-    // }
+ngOnInit(): void {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      const id = params.get('id');
+
+      if (id !== null) {
+        // Abonnement à l'observable pour récupérer les pokémons
+        this.pokemonService.getPokemons().subscribe({
+          next: pokemons => {
+            this.pokemon = pokemons.find(pokemon => pokemon.id === id);
+          },
+          error: err => {
+            console.error('Erreur lors de la récupération des pokémons', err);
+          }
+        });
+      }
+    });
   }
 }
